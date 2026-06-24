@@ -18,6 +18,7 @@ const websiteMenuItems = [
   { href: "/admin/testimoni", label: "Testimoni", icon: "reviews" },
   { href: "/admin/tentang-kami", label: "Tentang Kami", icon: "info" },
   { href: "/admin/pengaturan-wa", label: "Pengaturan WA", icon: "chat" },
+  { href: "/admin/kontak", label: "Pengaturan Kontak", icon: "contact_page" },
 ];
 
 export default function AdminSidebar() {

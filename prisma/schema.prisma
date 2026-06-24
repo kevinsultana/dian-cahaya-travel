@@ -139,3 +139,17 @@ model TeamMember {
 
   @@map("team_member")
 }
+
+// ─── Informasi Kontak (Singleton) ────────────────────────────────────────────
+model Kontak {
+  id           String   @id @default("singleton")
+  alamat       String
+  telepon      String
+  email        String
+  wa_cs        String
+  jam_kerja    String
+  gmaps_embed  String   @db.Text // Link embed iframe maps
+  updatedAt    DateTime @updatedAt
+
+  @@map("kontak")
+}

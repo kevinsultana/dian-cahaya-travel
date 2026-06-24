@@ -7,6 +7,7 @@ import Modal from "@/components/admin/Modal";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import CurrencyInput from "@/components/admin/CurrencyInput";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 const selectStyles = {
   control: (base) => ({
@@ -283,11 +284,13 @@ export default function PaketWisataPage() {
             <textarea value={formData.deskripsi} onChange={(e) => setFormData({ ...formData, deskripsi: e.target.value })} className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm h-20 resize-none" placeholder="Deskripsi singkat..." />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-semibold text-primary mb-2">URL Gambar</label>
-              <input type="url" value={formData.gambar} onChange={(e) => setFormData({ ...formData, gambar: e.target.value })} className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm" placeholder="https://..." />
-            </div>
+          <div className="space-y-4">
+            <ImageUpload
+              label="Foto Paket Wisata"
+              value={formData.gambar}
+              onChange={(url) => setFormData({ ...formData, gambar: url })}
+              folder="paket-wisata"
+            />
             <div>
               <label className="block text-sm font-semibold text-primary mb-2">Badge Paket</label>
               <input type="text" value={formData.badge} onChange={(e) => setFormData({ ...formData, badge: e.target.value })} className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm" placeholder="misal: Best Seller" />

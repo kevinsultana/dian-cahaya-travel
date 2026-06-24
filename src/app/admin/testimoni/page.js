@@ -6,6 +6,7 @@ import AdminHeader from "@/components/admin/AdminHeader";
 import Modal from "@/components/admin/Modal";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 const bintangOptions = [
   { value: 5, label: "5 Bintang" },
@@ -198,10 +199,12 @@ export default function TestimoniPage() {
             <label className="block text-sm font-semibold text-primary mb-2">Nama</label>
             <input type="text" value={formData.nama} onChange={(e) => setFormData({ ...formData, nama: e.target.value })} className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm" required />
           </div>
-          <div>
-            <label className="block text-sm font-semibold text-primary mb-2">URL Foto (opsional)</label>
-            <input type="url" value={formData.foto} onChange={(e) => setFormData({ ...formData, foto: e.target.value })} className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm" placeholder="https://..." />
-          </div>
+          <ImageUpload
+            label="Foto Jamaah (opsional)"
+            value={formData.foto}
+            onChange={(url) => setFormData({ ...formData, foto: url })}
+            folder="testimoni"
+          />
           <div>
             <label className="block text-sm font-semibold text-primary mb-2">Bintang</label>
             <Select value={bintangOptions.find((o) => o.value === Number(formData.bintang))} onChange={(s) => setFormData({ ...formData, bintang: s.value })} options={bintangOptions} styles={selectStyles} />

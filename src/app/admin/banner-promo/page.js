@@ -6,6 +6,7 @@ import AdminHeader from "@/components/admin/AdminHeader";
 import Modal from "@/components/admin/Modal";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 const statusOptions = [
   { value: "aktif", label: "Aktif" },
@@ -187,10 +188,12 @@ export default function BannerPromoPage() {
             <label className="block text-sm font-semibold text-primary mb-2">Subjudul</label>
             <textarea value={formData.subjudul} onChange={(e) => setFormData({ ...formData, subjudul: e.target.value })} className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm h-24 resize-none" required />
           </div>
-          <div>
-            <label className="block text-sm font-semibold text-primary mb-2">URL Gambar</label>
-            <input type="url" value={formData.gambar} onChange={(e) => setFormData({ ...formData, gambar: e.target.value })} className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm" required />
-          </div>
+          <ImageUpload
+            label="Foto Banner Promo"
+            value={formData.gambar}
+            onChange={(url) => setFormData({ ...formData, gambar: url })}
+            folder="banner-promo"
+          />
           <div>
             <label className="block text-sm font-semibold text-primary mb-2">Tautan</label>
             <input type="text" value={formData.tautan} onChange={(e) => setFormData({ ...formData, tautan: e.target.value })} className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm" required />

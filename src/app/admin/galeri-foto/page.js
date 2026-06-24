@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import AdminHeader from "@/components/admin/AdminHeader";
 import Modal from "@/components/admin/Modal";
 import Swal from "sweetalert2";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 export default function GaleriFotoPage() {
   const router = useRouter();
@@ -16,7 +17,6 @@ export default function GaleriFotoPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({ src: "", alt: "", urutan: 1 });
-  const fileInputRef = useRef(null);
 
   useEffect(() => {
     setMounted(true);
@@ -57,14 +57,7 @@ export default function GaleriFotoPage() {
     setIsModalOpen(true);
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setFormData((prev) => ({ ...prev, src: reader.result }));
-      reader.readAsDataURL(file);
-    }
-  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -190,13 +183,12 @@ export default function GaleriFotoPage() {
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={editingId ? "Edit Foto Galeri" : "Tambah Foto Galeri"}>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-semibold text-primary mb-2">Foto</label>
-            <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileChange} className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm" />
-            {formData.src && (
-              <div className="mt-3"><img src={formData.src} alt="Preview" className="w-full h-32 object-cover rounded-lg" /></div>
-            )}
-          </div>
+          <ImageUpload
+            label="Foto Galeri"
+            value={formData.src}
+            onChange={(url) => setFormData({ ...formData, src: url })}
+            folder="galeri"
+          />
 
           <div>
             <label className="block text-sm font-semibold text-primary mb-2">Alt Text / Caption</label>

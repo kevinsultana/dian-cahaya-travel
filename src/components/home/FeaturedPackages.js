@@ -103,7 +103,10 @@ export default function FeaturedPackages() {
                     </div>
                     <div className="flex items-center gap-3 text-on-surface-variant">
                       <span className="material-symbols-outlined text-primary">apartment</span>
-                      <span className="text-sm">{displayItems[0].hotel}</span>
+                      <span className="text-sm flex flex-col text-left">
+                        <span className="font-semibold text-primary/80">Mekkah: <span className="font-normal text-on-surface-variant">{displayItems[0].hotel_makkah || displayItems[0].hotel}</span></span>
+                        <span className="font-semibold text-primary/80">Madinah: <span className="font-normal text-on-surface-variant">{displayItems[0].hotel_madinah || "-"}</span></span>
+                      </span>
                     </div>
                     <div className="flex items-center gap-3 text-on-surface-variant">
                       <span className="material-symbols-outlined text-primary">payments</span>

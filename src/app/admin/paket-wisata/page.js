@@ -20,7 +20,8 @@ export default function PaketWisataPage() {
     nama: "",
     durasi: "",
     harga: "",
-    hotel: "",
+    hotel_makkah: "",
+    hotel_madinah: "",
     status: "active",
     tanggal_keberangkatan: "",
     quota: "",
@@ -45,7 +46,8 @@ export default function PaketWisataPage() {
       nama: "",
       durasi: "",
       harga: 0,
-      hotel: "",
+      hotel_makkah: "",
+      hotel_madinah: "",
       status: "active",
       tanggal_keberangkatan: "",
       quota: "",
@@ -66,7 +68,8 @@ export default function PaketWisataPage() {
       nama: item.nama,
       durasi: item.durasi,
       harga: item.harga || 0,
-      hotel: item.hotel,
+      hotel_makkah: item.hotel_makkah || "",
+      hotel_madinah: item.hotel_madinah || "",
       status: item.status,
       tanggal_keberangkatan: item.tanggal_keberangkatan,
       quota: item.quota.toString(),
@@ -88,7 +91,8 @@ export default function PaketWisataPage() {
       nama: formData.nama,
       durasi: formData.durasi,
       harga: Number(formData.harga) || 0,
-      hotel: formData.hotel,
+      hotel_makkah: formData.hotel_makkah,
+      hotel_madinah: formData.hotel_madinah,
       status: formData.status,
       tanggal_keberangkatan: formData.tanggal_keberangkatan,
       quota: Number(formData.quota),
@@ -211,7 +215,7 @@ export default function PaketWisataPage() {
                   <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Nama Paket</th>
                   <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Durasi</th>
                   <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Harga</th>
-                  <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Hotel</th>
+                  <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Hotel Mekkah / Madinah</th>
                   <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Status</th>
                   <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Keberangkatan</th>
                   <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Quota</th>
@@ -234,7 +238,12 @@ export default function PaketWisataPage() {
                     </td>
                     <td className="px-6 py-4 text-sm text-on-surface">{item.durasi}</td>
                     <td className="px-6 py-4 text-sm text-on-surface">{formatRupiah(item.harga)}</td>
-                    <td className="px-6 py-4 text-sm text-on-surface">{item.hotel}</td>
+                    <td className="px-6 py-4 text-sm text-on-surface">
+                      <div className="flex flex-col gap-0.5 text-xs">
+                        <span className="font-semibold text-primary/85">Mekkah: <span className="font-normal text-on-surface">{item.hotel_makkah || item.hotel}</span></span>
+                        <span className="font-semibold text-primary/85">Madinah: <span className="font-normal text-on-surface">{item.hotel_madinah || "-"}</span></span>
+                      </div>
+                    </td>
                     <td className="px-6 py-4">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         item.status === "active"
@@ -385,15 +394,29 @@ export default function PaketWisataPage() {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-primary mb-2">Hotel</label>
-            <input
-              type="text"
-              value={formData.hotel}
-              onChange={(e) => setFormData({ ...formData, hotel: e.target.value })}
-              className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm"
-              required
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Hotel Mekkah</label>
+              <input
+                type="text"
+                value={formData.hotel_makkah}
+                onChange={(e) => setFormData({ ...formData, hotel_makkah: e.target.value })}
+                className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm"
+                placeholder="misal: Movenpick Hajar Tower"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Hotel Madinah</label>
+              <input
+                type="text"
+                value={formData.hotel_madinah}
+                onChange={(e) => setFormData({ ...formData, hotel_madinah: e.target.value })}
+                className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm"
+                placeholder="misal: Al Aqeeq Madinah"
+                required
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">

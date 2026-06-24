@@ -121,7 +121,21 @@ model TentangKami {
   visi             String
   misi             String
   nilai_perusahaan String[]
+  gambar           String   @default("") // Gambar ilustrasi / profil perusahaan
   updatedAt        DateTime @updatedAt
 
   @@map("tentang_kami")
+}
+
+// ─── Anggota Tim Kami ────────────────────────────────────────────────────────
+model TeamMember {
+  id        String   @id @default(cuid())
+  nama      String
+  jabatan   String
+  foto      String   @default("")
+  urutan    Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("team_member")
 }

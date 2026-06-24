@@ -18,6 +18,7 @@ export async function GET() {
           visi: "Menjadi biro perjalanan ibadah terdepan yang memberikan pengalaman ibadah yang nyaman, aman, dan berkesan.",
           misi: "Menyediakan paket perjalanan ibadah yang terjangkau dengan pelayanan profesional dan fasilitas premium.",
           nilai_perusahaan: ["Amanah", "Profesional", "Berorientasi Pelayanan", "Terpercaya"],
+          gambar: "",
         },
       });
     }
@@ -48,6 +49,7 @@ export async function PUT(request) {
         visi: body.visi,
         misi: body.misi,
         nilai_perusahaan: nilaiArray,
+        gambar: body.gambar || "",
       },
       create: {
         id: "singleton",
@@ -57,6 +59,7 @@ export async function PUT(request) {
         visi: body.visi,
         misi: body.misi,
         nilai_perusahaan: nilaiArray,
+        gambar: body.gambar || "",
       },
     });
     return NextResponse.json(data);

@@ -380,14 +380,76 @@ async function main() {
       subjudul: "Biro Umroh dan Haji Terpercaya Sejak 2015",
       deskripsi:
         "Dian Cahaya Travel adalah biro perjalanan ibadah yang berkomitmen memberikan pelayanan terbaik untuk setiap jamaah. Dengan pengalaman lebih dari 10 tahun, kami telah membantu ribuan jamaah mewujudkan impian ibadah ke Tanah Suci.",
+      gambar: "https://images.unsplash.com/photo-1578894381163-e72c17f2d45f?w=1200&q=80",
+    },
+    create: {
+      id: "singleton",
+      judul: "Tentang Dian Cahaya Travel",
+      subjudul: "Biro Umroh dan Haji Terpercaya Sejak 2015",
+      deskripsi:
+        "Dian Cahaya Travel adalah biro perjalanan ibadah yang berkomitmen memberikan pelayanan terbaik untuk setiap jamaah. Dengan pengalaman lebih dari 10 tahun, kami telah membantu ribuan jamaah mewujudkan impian ibadah ke Tanah Suci.",
       visi:
         "Menjadi biro perjalanan ibadah terdepan yang memberikan pengalaman ibadah yang nyaman, aman, dan berkesan bagi setiap jamaah.",
       misi:
         "Menyediakan paket perjalanan ibadah yang terjangkau dengan pelayanan profesional and fasilitas premium, serta pembimbing yang berpengalaman dan ramah.",
       nilai_perusahaan: ["Amanah", "Profesional", "Berorientasi Pelayanan", "Terpercaya"],
+      gambar: "https://images.unsplash.com/photo-1578894381163-e72c17f2d45f?w=1200&q=80",
     },
   });
   console.log("   ✅ Tentang Kami berhasil disimpan");
+
+  // ── Anggota Tim Kami ────────────────────────────────────────────────────────
+  console.log("👥 Menyimpan Anggota Tim...");
+  const initialTeam = [
+    {
+      id: "tm-001",
+      nama: "KH. Ahmad Fauzi",
+      jabatan: "Pembimbing Ibadah",
+      foto: "",
+      urutan: 1,
+    },
+    {
+      id: "tm-002",
+      nama: "Rina Marlina, S.E.",
+      jabatan: "Manajer Operasional",
+      foto: "",
+      urutan: 2,
+    },
+    {
+      id: "tm-003",
+      nama: "H. Abdurrahman",
+      jabatan: "Kepala Cabang",
+      foto: "",
+      urutan: 3,
+    },
+    {
+      id: "tm-004",
+      nama: "Siti Nurhaliza",
+      jabatan: "Customer Service",
+      foto: "",
+      urutan: 4,
+    },
+  ];
+
+  for (const member of initialTeam) {
+    await prisma.teamMember.upsert({
+      where: { id: member.id },
+      update: {
+        nama: member.nama,
+        jabatan: member.jabatan,
+        foto: member.foto,
+        urutan: member.urutan,
+      },
+      create: {
+        id: member.id,
+        nama: member.nama,
+        jabatan: member.jabatan,
+        foto: member.foto,
+        urutan: member.urutan,
+      },
+    });
+  }
+  console.log("   ✅ 4 anggota tim berhasil disimpan");
 
   console.log("\n🎉 Seeding selesai! Semua data berhasil disimpan ke Supabase.");
 }

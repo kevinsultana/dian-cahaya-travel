@@ -1,4 +1,5 @@
 import "./globals.css";
+import PageTransition from "@/components/layout/PageTransition";
 
 export const metadata = {
   title: {
@@ -64,7 +65,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-full flex flex-col bg-background text-on-background overflow-x-hidden">
-        {children}
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   );

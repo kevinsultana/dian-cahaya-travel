@@ -2,18 +2,30 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { initialBannerPromo } from "@/data/constant";
+
 
 export default function PromoBanner() {
-  const [mounted, setMounted] = useState(false);
-  const [banners] = useLocalStorage("adminBannerPromo", initialBannerPromo);
+  const [banners, setBanners] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setMounted(true);
+    const fetchBanners = async () => {
+      try {
+        const res = await fetch("/api/banner-promo");
+        if (res.ok) {
+          const json = await res.json();
+          setBanners(json);
+        }
+      } catch (error) {
+        console.error("Gagal memuat banner promo:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBanners();
   }, []);
 
-  if (!mounted) return null;
+  if (loading) return null;
 
   const activeBanners = (banners || []).filter((item) => item.status === "aktif");
 

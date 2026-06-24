@@ -4,8 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { initialPaketWisata, initialInquiryJemaah, initialPengaturanWa } from "@/data/constant";
+
 import Swal from "sweetalert2";
 import Link from "next/link";
 
@@ -13,9 +12,14 @@ export default function PackageDetailPage() {
   const params = useParams();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  const [pakets] = useLocalStorage("adminPaketWisata", initialPaketWisata);
-  const [inquiries, setInquiries] = useLocalStorage("adminInquiryJemaah", initialInquiryJemaah);
-  const [waData] = useLocalStorage("adminPengaturanWa", initialPengaturanWa);
+  
+  // Data States
+  const [pkg, setPkg] = useState(null);
+  const [waData, setWaData] = useState(null);
+  
+  // Loading & Error States
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     nama: "",
@@ -23,14 +27,52 @@ export default function PackageDetailPage() {
     email: "",
   });
 
+  const pkgId = params?.id;
+
   useEffect(() => {
     setMounted(true);
-  }, []);
+
+    const loadPageData = async () => {
+      try {
+        setLoading(true);
+        // Load Paket Wisata
+        const pkgRes = await fetch(`/api/paket-wisata/${pkgId}`);
+        if (pkgRes.ok) {
+          const pkgJson = await pkgRes.json();
+          setPkg(pkgJson);
+        }
+
+        // Load Pengaturan WA
+        const waRes = await fetch("/api/pengaturan-wa");
+        if (waRes.ok) {
+          const waJson = await waRes.json();
+          setWaData(waJson);
+        }
+      } catch (error) {
+        console.error("Gagal memuat detail halaman paket:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (pkgId) {
+      loadPageData();
+    }
+  }, [pkgId]);
 
   if (!mounted) return null;
 
-  const pkgId = params?.id;
-  const pkg = (pakets || []).find((p) => p.id === pkgId);
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <main className="min-h-screen pt-32 flex flex-col items-center justify-center">
+          <div className="text-sm text-on-surface-variant">Memuat detail paket wisata...</div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   if (!pkg) {
     return (
@@ -74,7 +116,7 @@ export default function PackageDetailPage() {
   const waMessage = `Assalamualaikum Dian Cahaya Travel, saya tertarik dengan paket *${pkg.nama}* (Keberangkatan: ${formatLongDate(pkg.tanggal_keberangkatan)}). Mohon informasi cara pendaftaran dan ketersediaan kursi.`;
   const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.wa && !formData.email) {
@@ -86,26 +128,41 @@ export default function PackageDetailPage() {
       return;
     }
 
-    const newInquiry = {
-      id: `iq-${Date.now()}`,
-      nama: formData.nama,
-      wa: formData.wa,
-      email: formData.email,
-      paket: pkg.nama,
-      status: "baru",
-      tanggal: new Date().toISOString().split("T")[0],
-    };
+    setSubmitting(true);
 
-    setInquiries([...(inquiries || []), newInquiry]);
+    try {
+      const res = await fetch("/api/inquiry-jemaah", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nama: formData.nama,
+          wa: formData.wa,
+          email: formData.email,
+          paket: pkg.nama,
+          status: "baru",
+          tanggal: new Date().toISOString().split("T")[0],
+        }),
+      });
 
-    Swal.fire({
-      icon: "success",
-      title: "Pendaftaran Berhasil!",
-      text: "Pertanyaan atau minat Anda telah terkirim. Konsultan kami akan segera menghubungi Anda.",
-      confirmButtonText: "Selesai",
-    });
+      if (!res.ok) throw new Error();
 
-    setFormData({ nama: "", wa: "", email: "" });
+      Swal.fire({
+        icon: "success",
+        title: "Pendaftaran Berhasil!",
+        text: "Pertanyaan atau minat Anda telah terkirim. Konsultan kami akan segera menghubungi Anda.",
+        confirmButtonText: "Selesai",
+      });
+
+      setFormData({ nama: "", wa: "", email: "" });
+    } catch {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Gagal mengirimkan inquiry. Coba beberapa saat lagi.",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -317,11 +374,12 @@ export default function PackageDetailPage() {
                   />
                 </div>
 
-                <button
+                 <button
                   type="submit"
-                  className="w-full bg-primary text-on-primary py-3 rounded-lg font-bold hover:opacity-90 transition-all text-sm mt-2 cursor-pointer"
+                  disabled={submitting}
+                  className="w-full bg-primary text-on-primary py-3 rounded-lg font-bold hover:opacity-90 transition-all text-sm mt-2 cursor-pointer disabled:opacity-60"
                 >
-                  Kirim Pengajuan
+                  {submitting ? "Mengirim..." : "Kirim Pengajuan"}
                 </button>
               </form>
             </div>

@@ -8,6 +8,7 @@ const mainMenuItems = [
   { href: "/admin", label: "Dashboard", icon: "dashboard" },
   { href: "/admin/paket-wisata", label: "Paket Wisata", icon: "flight_takeoff" },
   { href: "/admin/inquiry-jemaah", label: "Inquiry Jamaah", icon: "groups" },
+  { href: "/admin/media", label: "Foto Management", icon: "image" },
 ];
 
 const websiteMenuItems = [

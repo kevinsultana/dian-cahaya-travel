@@ -2,18 +2,30 @@
 
 import React, { useState, useEffect } from "react";
 import PackageCard from "@/components/packages/PackageCard";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { initialPaketWisata } from "@/data/constant";
+
 
 export default function PackageGrid() {
-  const [mounted, setMounted] = useState(false);
-  const [pakets] = useLocalStorage("adminPaketWisata", initialPaketWisata);
+  const [pakets, setPakets] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setMounted(true);
+    const fetchPakets = async () => {
+      try {
+        const res = await fetch("/api/paket-wisata");
+        if (res.ok) {
+          const json = await res.json();
+          setPakets(json);
+        }
+      } catch (error) {
+        console.error("Gagal memuat daftar paket wisata:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPakets();
   }, []);
 
-  const activeList = (mounted ? pakets : initialPaketWisata).filter(
+  const activeList = pakets.filter(
     (p) => p.status === "active"
   );
 
@@ -43,6 +55,22 @@ export default function PackageGrid() {
       categoryBg,
     };
   });
+
+  if (loading) {
+    return (
+      <div className="py-20 text-center text-sm text-on-surface-variant bg-surface-container-low rounded-2xl">
+        Memuat paket wisata dari database...
+      </div>
+    );
+  }
+
+  if (displayList.length === 0) {
+    return (
+      <div className="py-20 text-center text-sm text-on-surface-variant bg-surface-container-low rounded-2xl">
+        Belum ada paket wisata aktif saat ini.
+      </div>
+    );
+  }
 
   return (
     <>

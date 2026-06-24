@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { initialPaketWisata } from "@/data/constant";
+
 
 const formatRupiah = (value) => {
   return new Intl.NumberFormat("id-ID", {
@@ -14,27 +13,46 @@ const formatRupiah = (value) => {
 };
 
 export default function FeaturedPackages() {
-  const [mounted, setMounted] = useState(false);
-  const [paketData] = useLocalStorage("adminPaketWisata", initialPaketWisata);
+  const [paketData, setPaketData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setMounted(true);
+    const fetchPakets = async () => {
+      try {
+        const res = await fetch("/api/paket-wisata");
+        if (res.ok) {
+          const json = await res.json();
+          setPaketData(json);
+        }
+      } catch (error) {
+        console.error("Gagal memuat paket unggulan:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPakets();
   }, []);
 
-  const activePaket = mounted ? paketData : initialPaketWisata;
-
   // Filter active & featured packages
-  const featuredItems = (activePaket || []).filter(
+  const featuredItems = (paketData || []).filter(
     (item) => item.status === "active" && item.featured
   );
 
   // Fallback to active items if featured items are less than 3
   const displayItems = [...featuredItems];
   if (displayItems.length < 3) {
-    const nonFeaturedActive = (activePaket || []).filter(
+    const nonFeaturedActive = (paketData || []).filter(
       (item) => item.status === "active" && !displayItems.some((d) => d.id === item.id)
     );
     displayItems.push(...nonFeaturedActive.slice(0, 3 - displayItems.length));
+  }
+
+  if (loading) {
+    return (
+      <div className="py-20 text-center text-sm text-on-surface-variant bg-surface-container-low">
+        Memuat paket unggulan...
+      </div>
+    );
   }
 
   if (displayItems.length === 0) return null;

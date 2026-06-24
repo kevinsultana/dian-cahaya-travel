@@ -117,7 +117,7 @@ export default function FeaturedPackages() {
                   </div>
                 </div>
                 <Link
-                  href="/paket-umrah"
+                  href={`/paket-umrah/${displayItems[0].id}`}
                   className="w-full bg-primary text-on-primary py-3 rounded-lg font-bold hover:opacity-90 transition-all text-center text-sm"
                 >
                   Pilih Paket
@@ -152,7 +152,7 @@ export default function FeaturedPackages() {
                     </span>
                   </div>
                   <Link
-                    href="/paket-umrah"
+                    href={`/paket-umrah/${displayItems[1].id}`}
                     className="w-full border-2 border-primary text-primary py-2 rounded-lg font-bold hover:bg-primary hover:text-on-primary transition-all text-center text-sm block"
                   >
                     Detail Paket
@@ -188,7 +188,7 @@ export default function FeaturedPackages() {
                     </span>
                   </div>
                   <Link
-                    href="/paket-umrah"
+                    href={`/paket-umrah/${displayItems[2].id}`}
                     className="w-full border-2 border-primary text-primary py-2 rounded-lg font-bold hover:bg-primary hover:text-on-primary transition-all text-center text-sm block"
                   >
                     Detail Paket

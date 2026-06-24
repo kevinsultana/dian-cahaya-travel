@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function PackageCard({ pkg }) {
   return (
     <div className="bg-surface rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group border border-outline-variant/30">
@@ -56,9 +58,12 @@ export default function PackageCard({ pkg }) {
             <p className="text-xs text-on-surface-variant uppercase tracking-wider">Mulai Dari</p>
             <p className="text-xl font-bold text-primary">{pkg.price}</p>
           </div>
-          <button className="bg-secondary-container text-primary px-5 py-2.5 rounded-lg font-bold hover:bg-secondary-fixed transition-colors cursor-pointer">
-            Daftar Sekarang
-          </button>
+          <Link
+            href={`/paket-umrah/${pkg.id}`}
+            className="bg-secondary-container text-primary px-5 py-2.5 rounded-lg font-bold hover:bg-secondary-fixed transition-colors text-sm text-center"
+          >
+            Lihat Detail
+          </Link>
         </div>
       </div>
     </div>

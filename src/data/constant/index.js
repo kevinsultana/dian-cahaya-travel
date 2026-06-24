@@ -111,24 +111,34 @@ export const initialPaketWisata = [
 
 export const initialGaleriFoto = [
   {
+    id: "gf-001",
     src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCfJq66xximN9ELYvkA0pp4LPrfeKhA1X5KSyR0lEJBVbi9wKJ4gJ-OF5pTrri_fHPsu4X_CdF-cyu2iM6cEy_7gHJJuZ-ujV1HAAGdGVZdopF6v35vNwRJh5309BonaFzqTDJtBfCaypO8Eej3fG9qRjIOJpV_uPMsY-BqIaBivz_Y9padYkAvyBwhJWyvX5wLVITIKbcrn3Z3S0L4RX_uk33KgMh3Mejfy2gfikXBbLZF6EYpwNhQkxkIBeNGyMdRXhjgle7-pcZW",
     alt: "Jamaah di depan Masjid Nabawi",
+    urutan: 1,
   },
   {
+    id: "gf-002",
     src: "https://lh3.googleusercontent.com/aida-public/AB6AXuBpoBfd-ccEiaV7uecUBqKYXwoWCLO9yHxZ8dY-MGEjFtxcA8sbS_yqQfV6nRYVGS7hQQNzkT1EpJZmJeRywm86C901MoHaLgW39dOKhjg3m89mdkYVB1ONtnX2Hm5hx4b-b8Z1hughnbdKZpaCgJiDE4cDme0GzhPUGQRf-UFez4i6IWwK706Auwl4a_heXvMUMsA1dMZAC6NI1UGsI1c5FPMmcQid4rOU2vGdP-auhaKqhM1XiqMGlePNwVofPsrt_s0DHoDJmlWj",
     alt: "Kelompok jamaah di Masjidil Haram",
+    urutan: 2,
   },
   {
+    id: "gf-003",
     src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAlP_OqLL0yI2K8SD3y5KRjcZ_WoX5mUIvnNdEzUAtIgW1U6sPM9wpoMqrHxV2YwK22f8_-hxECdjWHq9BqiuEebx6pAqSRYKdaapZLvue_n_G9wuSbb-26XmP-h5IfBNISSMcPNsfg9FEZMcVlFeuQLLVByrKk4gRDeM6UzFnHvV4_QVizLNdMrX70UBqdpJVt6wupg-xVaH6Wd8liqaIq8r68Oc4dn5eQjobbWI2bdGF9s28FZUcWvxm7YraAeLgMRHNzO4Ep-If-",
     alt: "Doa di dekat Ka'bah",
+    urutan: 3,
   },
   {
+    id: "gf-004",
     src: "https://lh3.googleusercontent.com/aida-public/AB6AXuA3pgEjT2xcWAJYt20VFvj3P284D7KSd-c47qJ7RBBWD2YPkWfHFCuNQAcBq2weegiVMWlxSMOGd9NlHFUjThtRyS7So6YaVSKAGDKXu96C1VjGjW3zjSL4S4RwS-0bEuM4vFqRTxlVqSHLrkSd98aptwDtFhwbBvmodKDBCRuwvYzGtGe_Mxd9xRIfK_tG0SFW4foejvDy0Y-QawRoXsom6FPf4yczVlHIIrIeGFnNAu4LSAXFxABEW7INeB7RWbrWRRlLLKAm5X0Q",
     alt: "Skyline Makkah malam hari",
+    urutan: 4,
   },
   {
+    id: "gf-005",
     src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCLjJuCvXdZeMuSO5br9cfGX8vLaSF_hUUh0OAAOQEBNTGzPP9WXt3Dnz1eBzleiL0G5LxSGLL4xNoTm9aqVePWbalcgH4hlIQ80dQak5OSIHXUPE5FT022AEUENqecamzv4eeKD_rsrTXkznEZuUAmS4Oi9GSYoNv-nBSc2few9hXSBxpPNCl_YPDg0n_ClaPjxxXHq4V9RTxODfrtdBdGirSOFYoIcXOFNUusEMJ_zv7-NM4CDO49ACbrBZmMGNUn-ASUfqz65Abl",
     alt: "Pilgrims menikmati hidangan di hotel",
+    urutan: 5,
   },
 ];
 

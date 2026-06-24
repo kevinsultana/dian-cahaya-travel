@@ -20,12 +20,26 @@ export default function GaleriFotoPage() {
     urutan: 1,
   });
   const fileInputRef = useRef(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!isLoggedIn) router.push("/admin/login");
-  }, [isLoggedIn, router]);
+    setMounted(true);
+    // If the data in localStorage has items without IDs, fix them to prevent future duplicates
+    if (data && data.some(item => !item.id)) {
+      const fixedData = data.map((item, idx) => ({
+        ...item,
+        id: item.id || `gf-migrated-${idx}-${Date.now()}`,
+        urutan: item.urutan || (idx + 1)
+      }));
+      setData(fixedData);
+    }
+  }, [data, setData]);
 
-  if (!isLoggedIn) return null;
+  useEffect(() => {
+    if (mounted && !isLoggedIn) router.push("/admin/login");
+  }, [mounted, isLoggedIn, router]);
+
+  if (!mounted || !isLoggedIn) return null;
 
   const openAddModal = () => {
     setEditingId(null);
@@ -105,6 +119,18 @@ export default function GaleriFotoPage() {
     });
   };
 
+  const handlePreviewImage = (item) => {
+    Swal.fire({
+      imageUrl: item.src,
+      imageAlt: item.alt,
+      title: item.alt,
+      confirmButtonText: "Tutup",
+      confirmButtonColor: "#3085d6",
+    });
+  };
+
+  const sortedData = [...data].sort((a, b) => a.urutan - b.urutan);
+
   return (
     <div>
       <AdminHeader title="Galeri Foto" onLogout={() => {
@@ -128,35 +154,60 @@ export default function GaleriFotoPage() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data.map((item) => (
-            <div key={item.id} className="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden group">
-              <div
-                className="w-full h-48 bg-cover bg-center"
-                style={{ backgroundImage: `url(${item.src})` }}
-              />
-              <div className="p-4">
-                <p className="text-sm font-medium text-primary line-clamp-1">{item.alt}</p>
-                <div className="flex items-center justify-between mt-3">
-                  <span className="text-xs text-on-surface-variant">Urutan: {item.urutan}</span>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => openEditModal(item)}
-                      className="p-2 text-on-surface-variant hover:text-primary transition-colors"
-                    >
-                      <span className="material-symbols-outlined text-[18px]">edit</span>
-                    </button>
-                    <button
-                      onClick={() => handleDelete(item.id)}
-                      className="p-2 text-on-surface-variant hover:text-error transition-colors"
-                    >
-                      <span className="material-symbols-outlined text-[18px]">delete</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-surface-container-low text-left">
+                  <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider w-20">No.</th>
+                  <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Deskripsi (Alt Text)</th>
+                  <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider w-28">Urutan</th>
+                  <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider w-36">Gambar</th>
+                  <th className="px-6 py-3 text-xs font-semibold text-on-surface-variant uppercase tracking-wider w-32">Aksi</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-outline-variant">
+                {sortedData.map((item, index) => (
+                  <tr key={item.id || index} className="hover:bg-surface-container-low transition-colors">
+                    <td className="px-6 py-4 text-sm font-medium text-on-surface">{index + 1}</td>
+                    <td className="px-6 py-4 text-sm text-primary font-medium">{item.alt}</td>
+                    <td className="px-6 py-4 text-sm text-on-surface font-semibold">{item.urutan}</td>
+                    <td className="px-6 py-4">
+                      <div 
+                        onClick={() => handlePreviewImage(item)}
+                        className="relative w-16 h-10 rounded-lg overflow-hidden border border-outline-variant/60 shadow-sm cursor-zoom-in hover:scale-105 transition-transform"
+                        title="Klik untuk memperbesar"
+                      >
+                        <img 
+                          src={item.src} 
+                          alt={item.alt} 
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => openEditModal(item)}
+                          className="p-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
+                          title="Edit"
+                        >
+                          <span className="material-symbols-outlined text-[18px]">edit</span>
+                        </button>
+                        <button
+                          onClick={() => handleDelete(item.id)}
+                          className="p-2 text-on-surface-variant hover:text-error transition-colors cursor-pointer"
+                          title="Hapus"
+                        >
+                          <span className="material-symbols-outlined text-[18px]">delete</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </main>
 

@@ -156,10 +156,17 @@ export default function InquiryJemaahPage() {
     });
   };
 
-  const openWhatsApp = (wa) => {
+  const openWhatsApp = (item) => {
+    const wa = item.wa || "";
     const [country = "+62", number = ""] = wa.split(/^(\+\d+)/).filter(Boolean);
     const cleanNumber = country + number;
-    window.open(`https://wa.me/${cleanNumber.replace(/\+/g, "")}`, "_blank");
+    const formattedDate = new Date(item.tanggal).toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+    const message = `Assalamualaikum ${item.nama}, kami ingin memfollow up pendaftaran Anda untuk ${item.paket} pada tanggal ${formattedDate}. Apakah ada yang bisa kami bantu?`;
+    window.open(`https://wa.me/${cleanNumber.replace(/\+/g, "")}?text=${encodeURIComponent(message)}`, "_blank");
   };
 
   const getStatusBadge = (status) => {
@@ -226,8 +233,8 @@ export default function InquiryJemaahPage() {
                     <td className="px-6 py-4 text-sm text-on-surface">
                       {item.wa ? (
                         <button
-                          onClick={() => openWhatsApp(item.wa)}
-                          className="text-green-600 hover:underline flex items-center gap-1"
+                          onClick={() => openWhatsApp(item)}
+                          className="text-green-600 hover:underline flex items-center gap-1 cursor-pointer"
                         >
                           <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
                           {item.wa}

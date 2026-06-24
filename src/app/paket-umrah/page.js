@@ -73,6 +73,7 @@ export default function PaketUmrahPage() {
                   Kategori Paket
                 </label>
                 <Select
+                  instanceId="kategori-select"
                   defaultValue={{ value: "all", label: "Semua Kategori" }}
                   options={[
                     { value: "all", label: "Semua Kategori" },
@@ -89,6 +90,7 @@ export default function PaketUmrahPage() {
                   Kisaran Harga
                 </label>
                 <Select
+                  instanceId="harga-select"
                   defaultValue={{ value: "all", label: "Semua Harga" }}
                   options={[
                     { value: "all", label: "Semua Harga" },
@@ -105,6 +107,7 @@ export default function PaketUmrahPage() {
                   Bulan Keberangkatan
                 </label>
                 <Select
+                  instanceId="bulan-select"
                   defaultValue={{ value: "all", label: "Semua Bulan" }}
                   options={[
                     { value: "all", label: "Semua Bulan" },

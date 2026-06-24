@@ -6,20 +6,44 @@ import Link from "next/link";
 import AdminHeader from "@/components/admin/AdminHeader";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
+import { supabase } from "@/lib/supabase";
+
 export default function LoginPage() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(""); // Username di sini merujuk pada Email
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [, setIsLoggedIn] = useLocalStorage("adminLoggedIn", false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (username === "admin" && password === "admin123") {
+    setError("");
+    setLoading(true);
+
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email: username, // Menggunakan email untuk login
+        password: password,
+      });
+
+      if (authError) {
+        throw new Error(authError.message);
+      }
+
+      // Simpan status logged-in
       setIsLoggedIn(true);
+      
+      // Simpan access token jika diperlukan oleh frontend
+      if (data?.session) {
+        localStorage.setItem("supabase_session", JSON.stringify(data.session));
+      }
+
       router.push("/admin");
-    } else {
-      setError("Username atau password salah");
+    } catch (err) {
+      setError(err.message || "Terjadi kesalahan saat login");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,9 +96,10 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="w-full bg-primary text-on-primary py-3 rounded-lg font-bold hover:opacity-90 transition-all"
+              disabled={loading}
+              className="w-full bg-primary text-on-primary py-3 rounded-lg font-bold hover:opacity-90 transition-all disabled:opacity-50"
             >
-              Masuk
+              {loading ? "Memproses..." : "Masuk"}
             </button>
           </form>
 

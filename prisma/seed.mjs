@@ -371,7 +371,7 @@ async function main() {
       visi:
         "Menjadi biro perjalanan ibadah terdepan yang memberikan pengalaman ibadah yang nyaman, aman, dan berkesan bagi setiap jamaah.",
       misi:
-        "Menyediakan paket perjalanan ibadah yang terjangkau dengan pelayanan profesional dan fasilitas premium, serta pembimbing yang berpengalaman dan ramah.",
+        "Menyediakan paket perjalanan ibadah yang terjangkau dengan pelayanan profesional and fasilitas premium, serta pembimbing yang berpengalaman dan ramah.",
       nilai_perusahaan: ["Amanah", "Profesional", "Berorientasi Pelayanan", "Terpercaya"],
     },
     create: {
@@ -383,7 +383,7 @@ async function main() {
       visi:
         "Menjadi biro perjalanan ibadah terdepan yang memberikan pengalaman ibadah yang nyaman, aman, dan berkesan bagi setiap jamaah.",
       misi:
-        "Menyediakan paket perjalanan ibadah yang terjangkau dengan pelayanan profesional dan fasilitas premium, serta pembimbing yang berpengalaman dan ramah.",
+        "Menyediakan paket perjalanan ibadah yang terjangkau dengan pelayanan profesional and fasilitas premium, serta pembimbing yang berpengalaman dan ramah.",
       nilai_perusahaan: ["Amanah", "Profesional", "Berorientasi Pelayanan", "Terpercaya"],
     },
   });

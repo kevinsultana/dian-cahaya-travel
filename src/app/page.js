@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/home/HeroSection";
 import TrustBar from "@/components/home/TrustBar";
+import PromoBanner from "@/components/home/PromoBanner";
 import FeaturedPackages from "@/components/home/FeaturedPackages";
 import Gallery from "@/components/home/Gallery";
 import Testimonials from "@/components/home/Testimonials";
@@ -30,6 +31,7 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <TrustBar />
+        <PromoBanner />
         <FeaturedPackages />
         <Gallery />
         <Testimonials />

@@ -11,7 +11,7 @@ const mainMenuItems = [
 ];
 
 const websiteMenuItems = [
-  { href: "/admin/hero-section", label: "Hero Section", icon: "view_quilt" },
+  { href: "/admin/hero-section", label: "Homepage", icon: "view_quilt" },
   { href: "/admin/banner-promo", label: "Banner Promo", icon: "campaign" },
   { href: "/admin/galeri-foto", label: "Galeri Foto", icon: "photo_library" },
   { href: "/admin/testimoni", label: "Testimoni", icon: "reviews" },
@@ -50,11 +50,10 @@ export default function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
-                isActive
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${isActive
                   ? "bg-white/15 text-white font-semibold"
                   : "text-white/70 hover:bg-white/10 hover:text-white"
-              }`}
+                }`}
             >
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
                 {item.icon}
@@ -81,9 +80,8 @@ export default function AdminSidebar() {
 
           {/* Submenu Items */}
           <div
-            className={`pl-6 mt-1 space-y-1 overflow-hidden transition-all duration-300 ${
-              websiteOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
-            }`}
+            className={`pl-6 mt-1 space-y-1 overflow-hidden transition-all duration-300 ${websiteOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
+              }`}
           >
             {websiteMenuItems.map((item) => {
               const isActive = pathname === item.href;
@@ -91,11 +89,10 @@ export default function AdminSidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-sm ${
-                    isActive
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-sm ${isActive
                       ? "bg-white/15 text-white font-semibold"
                       : "text-white/60 hover:bg-white/10 hover:text-white"
-                  }`}
+                    }`}
                 >
                   <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>
                     {item.icon}

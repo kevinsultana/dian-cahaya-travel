@@ -137,7 +137,7 @@ export default function HeroSectionPage() {
   return (
     <div>
       <AdminHeader
-        title="Hero Section"
+        title="Homepage"
         onLogout={() => {
           localStorage.removeItem("adminLoggedIn");
           router.push("/admin/login");
@@ -148,7 +148,7 @@ export default function HeroSectionPage() {
         <div className="flex justify-between items-center mb-6">
           <div>
             <p className="text-sm text-on-surface-variant">
-              Kelola slide banner utama/hero section pada halaman depan
+              Kelola slide banner utama/Homepage pada halaman depan
             </p>
           </div>
           <button
@@ -189,11 +189,10 @@ export default function HeroSectionPage() {
                     <td className="px-6 py-4 text-sm text-on-surface">{item.link_tombol}</td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          item.status === "aktif"
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${item.status === "aktif"
                             ? "bg-green-100 text-green-800"
                             : "bg-gray-100 text-gray-800"
-                        }`}
+                          }`}
                       >
                         {item.status === "aktif" ? "Aktif" : "Nonaktif"}
                       </span>

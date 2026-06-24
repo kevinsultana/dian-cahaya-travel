@@ -8,6 +8,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { initialPaketWisata } from "@/data/constant";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import CurrencyInput from "@/components/admin/CurrencyInput";
 
 export default function PaketWisataPage() {
   const router = useRouter();
@@ -24,6 +25,12 @@ export default function PaketWisataPage() {
     tanggal_keberangkatan: "",
     quota: "",
     terpakai: "0",
+    featured: false,
+    deskripsi: "",
+    gambar: "",
+    badge: "",
+    category: "",
+    airline: "",
   });
 
   useEffect(() => {
@@ -37,12 +44,18 @@ export default function PaketWisataPage() {
     setFormData({
       nama: "",
       durasi: "",
-      harga: "",
+      harga: 0,
       hotel: "",
       status: "active",
       tanggal_keberangkatan: "",
       quota: "",
       terpakai: "0",
+      featured: false,
+      deskripsi: "",
+      gambar: "",
+      badge: "",
+      category: "Reguler",
+      airline: "",
     });
     setIsModalOpen(true);
   };
@@ -52,12 +65,18 @@ export default function PaketWisataPage() {
     setFormData({
       nama: item.nama,
       durasi: item.durasi,
-      harga: item.harga.toString(),
+      harga: item.harga || 0,
       hotel: item.hotel,
       status: item.status,
       tanggal_keberangkatan: item.tanggal_keberangkatan,
       quota: item.quota.toString(),
       terpakai: item.terpakai.toString(),
+      featured: item.featured || false,
+      deskripsi: item.deskripsi || "",
+      gambar: item.gambar || "",
+      badge: item.badge || "",
+      category: item.category || "Reguler",
+      airline: item.airline || "",
     });
     setIsModalOpen(true);
   };
@@ -68,12 +87,18 @@ export default function PaketWisataPage() {
       id: editingId || `pw-${Date.now()}`,
       nama: formData.nama,
       durasi: formData.durasi,
-      harga: Number(formData.harga),
+      harga: Number(formData.harga) || 0,
       hotel: formData.hotel,
       status: formData.status,
       tanggal_keberangkatan: formData.tanggal_keberangkatan,
       quota: Number(formData.quota),
       terpakai: Number(formData.terpakai),
+      featured: formData.featured,
+      deskripsi: formData.deskripsi,
+      gambar: formData.gambar,
+      badge: formData.badge,
+      category: formData.category,
+      airline: formData.airline,
     };
 
     if (editingId) {
@@ -196,7 +221,17 @@ export default function PaketWisataPage() {
               <tbody className="divide-y divide-outline-variant">
                 {data.map((item) => (
                   <tr key={item.id} className="hover:bg-surface-container-low transition-colors">
-                    <td className="px-6 py-4 text-sm font-medium text-primary">{item.nama}</td>
+                    <td className="px-6 py-4 text-sm font-medium text-primary">
+                      <div className="flex flex-col gap-1">
+                        <span>{item.nama}</span>
+                        {item.featured && (
+                          <span className="inline-flex items-center gap-1 self-start px-2 py-0.5 rounded text-[10px] font-semibold bg-yellow-100 text-yellow-800">
+                            <span className="material-symbols-outlined text-[10px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                            Unggulan
+                          </span>
+                        )}
+                      </div>
+                    </td>
                     <td className="px-6 py-4 text-sm text-on-surface">{item.durasi}</td>
                     <td className="px-6 py-4 text-sm text-on-surface">{formatRupiah(item.harga)}</td>
                     <td className="px-6 py-4 text-sm text-on-surface">{item.hotel}</td>
@@ -254,6 +289,82 @@ export default function PaketWisataPage() {
             />
           </div>
 
+          <div className="flex items-center gap-2 py-1">
+            <input
+              type="checkbox"
+              id="featured"
+              checked={formData.featured}
+              onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+              className="w-4 h-4 text-primary border-outline-variant rounded focus:ring-primary cursor-pointer"
+            />
+            <label htmlFor="featured" className="text-sm font-semibold text-primary select-none cursor-pointer">
+              Tampilkan sebagai Paket Unggulan (Featured) di Homepage
+            </label>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-primary mb-2">Deskripsi Singkat</label>
+            <textarea
+              value={formData.deskripsi}
+              onChange={(e) => setFormData({ ...formData, deskripsi: e.target.value })}
+              className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm h-20 resize-none"
+              placeholder="Deskripsi singkat yang akan tampil di halaman depan..."
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">URL Gambar</label>
+              <input
+                type="url"
+                value={formData.gambar}
+                onChange={(e) => setFormData({ ...formData, gambar: e.target.value })}
+                className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm"
+                placeholder="https://..."
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Badge Paket</label>
+              <input
+                type="text"
+                value={formData.badge}
+                onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
+                className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm"
+                placeholder="misal: Best Seller / Promo"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Kategori Paket</label>
+              <Select
+                value={{ value: formData.category, label: formData.category }}
+                onChange={(selected) => setFormData({ ...formData, category: selected.value })}
+                options={[
+                  { value: "Reguler", label: "Reguler" },
+                  { value: "Plus", label: "Plus" },
+                  { value: "Plus Turki", label: "Plus Turki" },
+                  { value: "Ramadhan", label: "Ramadhan" },
+                  { value: "Ekonomi", label: "Ekonomi" },
+                  { value: "Haji Furoda", label: "Haji Furoda" },
+                ]}
+                styles={selectStyles}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Maskapai Penerbangan</label>
+              <input
+                type="text"
+                value={formData.airline}
+                onChange={(e) => setFormData({ ...formData, airline: e.target.value })}
+                className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm"
+                placeholder="misal: Saudi Airlines"
+                required
+              />
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-semibold text-primary mb-2">Durasi</label>
@@ -266,16 +377,12 @@ export default function PaketWisataPage() {
                 required
               />
             </div>
-            <div>
-              <label className="block text-sm font-semibold text-primary mb-2">Harga (Rp)</label>
-              <input
-                type="number"
-                value={formData.harga}
-                onChange={(e) => setFormData({ ...formData, harga: e.target.value })}
-                className="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none transition-all text-sm"
-                required
-              />
-            </div>
+            <CurrencyInput
+              label="Harga (Rp)"
+              value={formData.harga}
+              onChange={(val) => setFormData({ ...formData, harga: val })}
+              required
+            />
           </div>
 
           <div>

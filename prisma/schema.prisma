@@ -1,0 +1,127 @@
+// Prisma Schema - Dian Cahaya Travel
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Paket Wisata (Umroh & Haji) ────────────────────────────────────────────
+model PaketWisata {
+  id                    String   @id @default(cuid())
+  nama                  String
+  durasi                String
+  harga                 Int
+  hotel_makkah          String
+  hotel_madinah         String
+  status                String   @default("active")
+  tanggal_keberangkatan String
+  quota                 Int
+  terpakai              Int      @default(0)
+  featured              Boolean  @default(false)
+  deskripsi             String
+  gambar                String
+  badge                 String   @default("")
+  category              String
+  airline               String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("paket_wisata")
+}
+
+// ─── Galeri Foto ─────────────────────────────────────────────────────────────
+model GaleriFoto {
+  id        String   @id @default(cuid())
+  src       String
+  alt       String
+  urutan    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("galeri_foto")
+}
+
+// ─── Inquiry / Pendaftaran Jemaah ────────────────────────────────────────────
+model InquiryJemaah {
+  id        String   @id @default(cuid())
+  nama      String
+  wa        String   @default("")
+  email     String   @default("")
+  paket     String
+  status    String   @default("baru")
+  tanggal   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("inquiry_jemaah")
+}
+
+// ─── Testimoni ────────────────────────────────────────────────────────────────
+model Testimoni {
+  id             String   @id @default(cuid())
+  nama           String
+  foto           String   @default("")
+  bintang        Int
+  teks_deskripsi String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("testimoni")
+}
+
+// ─── Banner Promo ─────────────────────────────────────────────────────────────
+model BannerPromo {
+  id        String   @id @default(cuid())
+  judul     String
+  subjudul  String
+  gambar    String
+  tautan    String
+  status    String   @default("aktif")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("banner_promo")
+}
+
+// ─── Hero Section (Homepage Slider) ──────────────────────────────────────────
+model HeroSection {
+  id          String   @id @default(cuid())
+  judul       String
+  subjudul    String
+  gambar      String
+  link_tombol String
+  status      String   @default("aktif")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("hero_section")
+}
+
+// ─── Pengaturan WhatsApp (Singleton) ─────────────────────────────────────────
+model PengaturanWa {
+  id             String   @id @default("singleton")
+  nomor          String
+  pesan_template String
+  updatedAt      DateTime @updatedAt
+
+  @@map("pengaturan_wa")
+}
+
+// ─── Tentang Kami (Singleton) ─────────────────────────────────────────────────
+model TentangKami {
+  id               String   @id @default("singleton")
+  judul            String
+  subjudul         String
+  deskripsi        String
+  visi             String
+  misi             String
+  nilai_perusahaan String[]
+  updatedAt        DateTime @updatedAt
+
+  @@map("tentang_kami")
+}

@@ -7,9 +7,13 @@ export default function Footer() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 px-6 py-20 max-w-[1280px] mx-auto">
         {/* Brand */}
         <div className="space-y-6">
-          <h3 className="text-xl font-bold text-secondary-fixed">
-            Dian Cahaya Travel
-          </h3>
+          <div className="flex items-center gap-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo1.png" alt="Dian Cahaya Logo" className="h-10 w-auto object-contain" />
+            <h3 className="text-xl font-bold text-secondary-fixed">
+              Dian Cahaya
+            </h3>
+          </div>
           <p className="text-sm text-on-primary/80 leading-relaxed">
             Penyelenggara Perjalanan Ibadah Umroh (PPIU) resmi dengan komitmen
             melayani sepenuh hati untuk kenyamanan ibadah Anda.

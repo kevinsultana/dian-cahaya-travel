@@ -40,6 +40,7 @@ export default function PackageDetailPage() {
         if (pkgRes.ok) {
           const pkgJson = await pkgRes.json();
           setPkg(pkgJson);
+          document.title = `${pkgJson.nama || "Detail Paket"} | Dian Cahaya Travel`;
         }
 
         // Load Pengaturan WA

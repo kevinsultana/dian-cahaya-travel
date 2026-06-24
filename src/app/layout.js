@@ -1,9 +1,51 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Dian Cahaya Travel - Perjalanan Ibadah Nyaman & Amanah",
+  title: {
+    default: "Dian Cahaya Travel - Perjalanan Ibadah Nyaman & Amanah",
+    template: "%s | Dian Cahaya Travel"
+  },
   description:
-    "Wujudkan impian ibadah Umroh dan Haji Anda bersama pembimbing profesional dan fasilitas premium bintang 5 yang terverifikasi resmi oleh Kemenag.",
+    "Wujudkan impian ibadah Umroh dan Haji Anda bersama pembimbing profesional dan fasilitas premium bintang 5 yang terverifikasi resmi oleh Kemenag RI.",
+  keywords: ["umroh resmi kemenag", "travel umroh terpercaya", "haji furoda", "haji plus", "dian cahaya travel", "umroh bintang 5", "biro umroh jakarta"],
+  authors: [{ name: "Dian Cahaya Travel" }],
+  metadataBase: new URL("https://diancahaya.com"),
+  alternates: {
+    canonical: "/"
+  },
+  openGraph: {
+    title: "Dian Cahaya Travel - Perjalanan Ibadah Nyaman & Amanah",
+    description: "Wujudkan impian ibadah Umroh dan Haji Anda bersama pembimbing profesional dan fasilitas premium bintang 5.",
+    url: "https://diancahaya.com",
+    siteName: "Dian Cahaya Travel",
+    images: [
+      {
+        url: "/logo1.png",
+        width: 800,
+        height: 600,
+        alt: "Dian Cahaya Travel Logo",
+      }
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dian Cahaya Travel",
+    description: "Perjalanan Ibadah Umroh & Haji Nyaman, Amanah, dan Berpengalaman.",
+    images: ["/logo1.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -49,6 +49,7 @@ export default function PaketUmrahPage() {
 
   useEffect(() => {
     setMounted(true);
+    document.title = "Daftar Paket Umroh & Haji | Dian Cahaya Travel";
 
     const loadFilterData = async () => {
       try {

@@ -19,8 +19,12 @@ export default function Header() {
     <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-background/85 border-b border-outline-variant">
       <nav className="flex items-center justify-between px-gutter mx-auto w-full" style={{ maxWidth: "1280px", padding: "1rem 1.5rem" }}>
         {/* Logo */}
-        <Link href="/" className="text-headline-md font-bold text-primary" style={{ fontSize: "24px", fontWeight: 600 }}>
-          Dian Cahaya Travel
+        <Link href="/" className="flex items-center gap-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo1.png" alt="Dian Cahaya Travel Logo" className="h-10 w-auto object-contain" />
+          <span className="text-xl font-bold text-primary tracking-tight hidden sm:inline">
+            Dian Cahaya
+          </span>
         </Link>
 
         {/* Desktop Nav */}
@@ -34,11 +38,10 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 style={{ fontSize: "16px" }}
-                className={`transition-colors ${
-                  isActive
-                    ? "text-primary font-bold border-b-2 border-primary pb-1"
-                    : "text-on-surface-variant hover:text-primary"
-                }`}
+                className={`transition-colors ${isActive
+                  ? "text-primary font-bold border-b-2 border-primary pb-1"
+                  : "text-on-surface-variant hover:text-primary"
+                  }`}
               >
                 {link.label}
               </Link>
@@ -74,11 +77,10 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-sm transition-colors ${
-                    isActive
-                      ? "bg-primary/10 text-primary font-bold"
-                      : "text-on-surface-variant hover:bg-surface-variant"
-                  }`}
+                  className={`block px-4 py-3 rounded-lg text-sm transition-colors ${isActive
+                    ? "bg-primary/10 text-primary font-bold"
+                    : "text-on-surface-variant hover:bg-surface-variant"
+                    }`}
                 >
                   {link.label}
                 </Link>
